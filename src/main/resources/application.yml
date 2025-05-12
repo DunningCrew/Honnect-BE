@@ -1,0 +1,4 @@
+security:
+  token:
+    secret-key: QERFGHIOPOKJNBVFDSDFGIUJHTYRGEFGHIOPOKJNBVFDSDFG
+    expiration-time: 86400000
