@@ -4,6 +4,7 @@ import com.honnect.server.domain.Member;
 import com.honnect.server.domain.MemberRepository;
 import com.honnect.server.infra.security.JwtTokenProvider;
 import com.honnect.server.infra.security.UserPrincipal;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,11 +30,12 @@ public class AuthService {
         Member member = memberRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
-        if (member.getPassword().equals(password)) {
+        if (!member.getPassword().equals(password)) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
         UserPrincipal principal = new UserPrincipal(member.getId(), member.getUsername());
         return tokenProvider.generateToken(principal);
     }
+
 }
