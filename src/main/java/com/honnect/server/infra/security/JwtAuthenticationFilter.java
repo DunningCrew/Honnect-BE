@@ -6,9 +6,14 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Collections;
+
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenProvider tokenProvider;
@@ -21,9 +26,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // JWT 유효성 검사 및 사용자 식별자 추출
             if (jwt != null && tokenProvider.validateToken(jwt)) {
                 String userId = tokenProvider.getUserIdFromJWT(jwt);
-
+                Long userId2=Long.parseLong(userId); //userId가String형이기에 Long으로 변환
                 // UserPrincipal 객체 생성
-                UserPrincipal userPrincipal = new UserPrincipal(userId, null);
+                UserPrincipal userPrincipal = new UserPrincipal(userId2, null);
 
                 // SecurityContext에 인증 정보 설정
                 UsernamePasswordAuthenticationToken authentication =

@@ -10,7 +10,7 @@ import java.util.Date;
 import javax.crypto.SecretKey;
 import org.springframework.stereotype.Component;
 
-import static org.springframework.web.client.RestClientUtils.getBody;
+
 
 @Component
 public class JwtTokenProvider {
@@ -51,10 +51,10 @@ public class JwtTokenProvider {
     }
 
     public String getUserIdFromJWT(String jwt) {
-        Claims claims = Jwts.parser() // parser() 대신 parserBuilder() 사용
+        Claims claims = (Claims) Jwts.parser() // parser() 대신 parserBuilder() 사용
                 .verifyWith(key)
                 .build()
-                .parseSignedClaims(jwt);
+                .parseSignedClaims(jwt)
                 .getBody();
 
         return claims.getSubject();
