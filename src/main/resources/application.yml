@@ -2,3 +2,17 @@ security:
   token:
     secret-key: QERFGHIOPOKJNBVFDSDFGIUJHTYRGEFGHIOPOKJNBVFDSDFG
     expiration-time: 86400000
+
+spring:
+      datasource:
+        url: jdbc:h2:mem:testdb
+        driver-class-name: org.h2.Driver
+        username: sa
+        password:
+      jpa:
+        hibernate:
+          ddl-auto: update  # 테이블 자동 생성
+        show-sql: true       # 콘솔에 쿼리 로그 출력
+      h2:
+        console:
+          enabled: true      # 웹에서 H2 콘솔 사용 가능
