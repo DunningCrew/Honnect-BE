@@ -45,18 +45,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 다음 필터로 요청 전달
         filterChain.doFilter(request, response);
     }
-    private String getJwtFromRequest(HttpServletRequest request) {  //쿠키에서 jwt추출 메서드
-
-       Cookie[] cookie = request.getCookies();
-        for (Cookie cookie1 : cookie) {
-           String a= cookie1.getName();
-
-        if( a.equals("access-token")){
-            return cookie1.getValue();
+    private String getJwtFromRequest(HttpServletRequest request) {  // 요청으로부터 jwt추출
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("access-token".equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
         }
-
-    }
-
         return null;
     }
+
 }
